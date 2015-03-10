@@ -1,4 +1,5 @@
-﻿using TestProject.Model.Enum;
+﻿using System.Collections.Generic;
+using TestProject.Model.Enums;
 
 namespace TestProject.Model.Domain
 {
@@ -7,7 +8,6 @@ namespace TestProject.Model.Domain
 
         public User()
         {
-            // empty
         }
 
         public User(View.User model)
@@ -16,8 +16,7 @@ namespace TestProject.Model.Domain
             Email = model.Email;
             FirstName = model.FirstName;
             LastName = model.LastName;
-            Status = model.Status;
-
+            StatusEnum = model.Status;
         }
 
         public int UserId { get; set; }
@@ -25,8 +24,9 @@ namespace TestProject.Model.Domain
         public string Password { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public UserRole Role { get; set; }
-        public UserStatus Status { get; set; }
+        public UserStatusEnum StatusEnum { get; set; }
+
+        public virtual ICollection<UserRole> Roles { get; set; }
 
     }
 }

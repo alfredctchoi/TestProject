@@ -13,6 +13,7 @@ namespace TestProject.Database.Context
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Session> Sessions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -28,6 +29,13 @@ namespace TestProject.Database.Context
                 .HasOptional(u => u.ModifiedUser)
                 .WithMany()
                 .HasForeignKey(u => u.ModifiedUserId);
+
+
+            modelBuilder.Entity<UserRole>()
+                .HasKey(ur => ur.UserRoleId)
+                .HasOptional(ur => ur.User)
+                .WithMany(u => u.Roles)
+                .HasForeignKey(r => r.UserId);
         }
     }
 }

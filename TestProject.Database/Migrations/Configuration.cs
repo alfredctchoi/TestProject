@@ -1,11 +1,15 @@
+using System;
+using System.Collections.Generic;
+using TestProject.Model.Domain;
+using TestProject.Model.Enums;
+using TestProject.Service;
+using UserRole = TestProject.Model.Domain.UserRole;
+
 namespace TestProject.Database.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<TestProject.Database.Context.AdminContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Context.AdminContext>
     {
         public Configuration()
         {
@@ -13,8 +17,29 @@ namespace TestProject.Database.Migrations
             ContextKey = "TestProject.Database.Context.AdminContext";
         }
 
-        protected override void Seed(TestProject.Database.Context.AdminContext context)
+        protected override void Seed(Context.AdminContext context)
         {
+
+            var user = new User
+            {
+                Password = PasswordUtility.Encrypt("Alfred"),
+                Created = DateTime.UtcNow,
+                Deleted = false,
+                Email = "alfred.ct.choi@gmail.com",
+                FirstName = "Alfred",
+                LastName = "Choi",
+                StatusEnum = UserStatusEnum.Active,
+                Roles = new List<UserRole>
+                {
+                    new UserRole
+                    {
+                        Role = UserRoleEnum.Admin
+                    }
+                }
+            };
+
+            context.Users.AddOrUpdate(user);
+
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

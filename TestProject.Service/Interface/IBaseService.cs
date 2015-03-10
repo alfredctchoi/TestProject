@@ -6,6 +6,8 @@
 
         void Create(T item);
 
+        void Remove(object id);
+
         T Get(object id);
     }
 }

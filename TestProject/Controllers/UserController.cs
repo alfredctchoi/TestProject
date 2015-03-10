@@ -12,15 +12,19 @@ namespace TestProject.Controllers
     {
 
         private readonly IUserService _userService;
+        private ISessionService _sessionService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService,
+            ISessionService sessionService)
         {
             _userService = userService;
+            _sessionService = sessionService;
         }
 
         [Route("authenticate")]
         public HttpResponseMessage PostAuthenticate(UserLogin login)
         {
+
             var token = _userService.Authenticate(login);
             return token == null 
                 ? Request.CreateResponse(HttpStatusCode.Unauthorized) 
@@ -66,8 +70,12 @@ namespace TestProject.Controllers
         }
 
         // DELETE api/user/5
-        public void Delete(int id)
+        [Route("{id:int}")]
+        [Authenticate]
+        public HttpResponseMessage Delete(int id)
         {
+            _userService.Remove(id);
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

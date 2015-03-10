@@ -17,12 +17,19 @@ namespace TestProject.Service
 
         public void Save(object id, Session item)
         {
-            throw new System.NotImplementedException();
+            var session = _sessionRepository.Get(id);
+            session.Expires = item.Expires;
+            _sessionRepository.Save();
         }
 
         public void Create(Session item)
         {
             _sessionRepository.Create(item);
+        }
+
+        public void Remove(object id)
+        {
+            throw new NotImplementedException();
         }
 
         public Session Get(object id)
@@ -33,6 +40,18 @@ namespace TestProject.Service
         public Session GetByGuid(Guid guid)
         {
             return _sessionRepository.Search(s => s.Token.Equals(guid));
+        }
+
+        public Session GetActiveSessionByUserId(int userId)
+        {
+            var currentDateTime = DateTime.UtcNow;
+            var session = _sessionRepository.Search(s => s.UserId == userId && s.Expires > currentDateTime);
+            if (session != null)
+            {
+                return session;
+            }
+
+            return null;
         }
     }
 }

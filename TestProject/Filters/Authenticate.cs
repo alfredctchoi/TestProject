@@ -15,8 +15,8 @@ namespace TestProject.Filters
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            const string tokenKey = "X-Limitless-Token";
-            const string userKey = "X-Limitless-UserId";
+            const string tokenKey = "tp-token";
+            const string userKey = "tp-userId";
 
             try
             {

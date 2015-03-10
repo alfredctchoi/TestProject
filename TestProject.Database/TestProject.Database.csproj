@@ -61,6 +61,10 @@
       <Project>{B208C872-CF2D-4518-AA06-32573692F7CD}</Project>
       <Name>TestProject.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestProject.Utility\TestProject.Utility.csproj">
+      <Project>{81552E6C-77D4-4CD7-8E2C-D4D89C2430A4}</Project>
+      <Name>TestProject.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

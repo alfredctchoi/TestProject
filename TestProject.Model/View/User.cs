@@ -1,4 +1,8 @@
-﻿using TestProject.Model.Enum;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using TestProject.Model.Domain;
+using TestProject.Model.Enums;
 using TestProject.Model.View.Interfaces;
 
 namespace TestProject.Model.View
@@ -17,7 +21,8 @@ namespace TestProject.Model.View
             Email = user.Email;
             FirstName = user.FirstName;
             LastName = user.LastName;
-            Status = user.Status;
+            Status = user.StatusEnum;
+            Roles = user.Roles.Select(r => r.Role.ToString()).ToList();
         }
 
         public int UserId { get; set; }
@@ -25,7 +30,8 @@ namespace TestProject.Model.View
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
-        public UserStatus Status { get; set; }
+        public UserStatusEnum Status { get; set; }
+        public IEnumerable<string> Roles { get; set; }
         
         public virtual bool IsValid()
         {
@@ -47,6 +53,14 @@ namespace TestProject.Model.View
             }
 
             return true;
+        }
+
+        public IList<UserRole> ToUserRoles()
+        {
+            return Roles.Select(r => new UserRole
+            {
+                Role = (UserRoleEnum) Enum.Parse(typeof (UserRoleEnum), r)
+            }).ToList();
         }
     }
 }

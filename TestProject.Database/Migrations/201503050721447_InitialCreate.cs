@@ -30,8 +30,7 @@ namespace TestProject.Database.Migrations
                         Password = c.String(),
                         FirstName = c.String(),
                         LastName = c.String(),
-                        Role = c.Int(nullable: false),
-                        Status = c.Int(nullable: false),
+                        StatusEnum = c.Int(nullable: false),
                         CreatedUserId = c.Int(),
                         ModifiedUserId = c.Int(),
                         Created = c.DateTime(),
@@ -44,16 +43,31 @@ namespace TestProject.Database.Migrations
                 .Index(t => t.CreatedUserId)
                 .Index(t => t.ModifiedUserId);
             
+            CreateTable(
+                "dbo.UserRoles",
+                c => new
+                    {
+                        UserRoleId = c.Int(nullable: false, identity: true),
+                        UserId = c.Int(),
+                        Role = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.UserRoleId)
+                .ForeignKey("dbo.Users", t => t.UserId)
+                .Index(t => t.UserId);
+            
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.Sessions", "UserId", "dbo.Users");
+            DropForeignKey("dbo.UserRoles", "UserId", "dbo.Users");
             DropForeignKey("dbo.Users", "ModifiedUserId", "dbo.Users");
             DropForeignKey("dbo.Users", "CreatedUserId", "dbo.Users");
+            DropIndex("dbo.UserRoles", new[] { "UserId" });
             DropIndex("dbo.Users", new[] { "ModifiedUserId" });
             DropIndex("dbo.Users", new[] { "CreatedUserId" });
             DropIndex("dbo.Sessions", new[] { "UserId" });
+            DropTable("dbo.UserRoles");
             DropTable("dbo.Users");
             DropTable("dbo.Sessions");
         }

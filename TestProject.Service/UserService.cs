@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using TestProject.Model.Domain;
-using TestProject.Model.Enum;
+using TestProject.Model.Enums;
 using TestProject.Model.View;
 using TestProject.Repository.Interface;
 using TestProject.Service.Interface;
@@ -39,24 +37,31 @@ namespace TestProject.Service
                 throw new Exception("Invalid login.");
             }
 
-            var hashPassword = HashPassword(login.Password);
-            var user = _userRepository.Search(u => u.Email.Equals(login.Email) && u.Password.Equals(hashPassword));
+            var hashPassword = PasswordUtility.Encrypt(login.Password);
+            var user = _userRepository.Search(u => u.Email.Equals(login.Email) && u.Password.Equals(hashPassword) && !u.Deleted);
 
             if (user == null)
             {
                 return null;
             }
 
-            var session = new Session
+            var session = _sessionService.GetActiveSessionByUserId(user.UserId);
+
+            if (session != null)
+            {
+                session.Expires = DateTime.UtcNow.AddHours(24);
+                _sessionService.Save(session.SessionId, session);
+                return session.Token;
+            }
+
+            session = new Session
             {
                 UserId = user.UserId,
                 Created = DateTime.UtcNow,
                 Expires = DateTime.UtcNow.AddHours(24),
                 Token = Guid.NewGuid(),
             };
-
             _sessionService.Create(session);
-
             return session.Token;
         }
 
@@ -69,7 +74,7 @@ namespace TestProject.Service
 
             var user = _userRepository.Get(userId);
 
-            if (user == null)
+            if (user == null || user.Deleted)
             {
                 throw new Exception("User not found.");
             }
@@ -91,7 +96,7 @@ namespace TestProject.Service
                 throw new Exception("Invalid user data");
             }
 
-            var existingUser = _userRepository.Search(u => u.Email.Equals(userModel.Email));
+            var existingUser = _userRepository.Search(u => u.Email.Equals(userModel.Email) && !u.Deleted);
 
             if (existingUser != null)
             {
@@ -100,38 +105,33 @@ namespace TestProject.Service
 
             var user = new DomainUser(userModel)
             {
-                Password = HashPassword(userModel.Password),
+                Password = PasswordUtility.Encrypt(userModel.Password),
                 Created = DateTime.UtcNow,
                 Deleted = false,
-                Status = UserStatus.Active
+                StatusEnum = UserStatusEnum.Active,
+                Roles = userModel.ToUserRoles()
             };
 
             _userRepository.Create(user);
         }
 
+        public void Remove(object id)
+        {
+            var user = _userRepository.Get(id);
+            
+            if (user.Deleted)
+            {
+                return;
+            }
+
+            user.Deleted = true;
+            _userRepository.Save();
+        }
+
         public ModelUser Get(object id)
         {
             var domainUser = _userRepository.Get(id);
-            return domainUser == null ? null : new ModelUser(domainUser);
-        }
-
-        private static string HashPassword(string password)
-        {
-            string passwordHashed;
-            using (var md5 = new MD5CryptoServiceProvider())
-            {
-                var hash = md5.ComputeHash(Encoding.ASCII.GetBytes(password));
-
-                var sb = new StringBuilder();
-                for (int i = 0; i < hash.Length; i++)
-                {
-                    sb.Append(hash[i].ToString("x2"));
-                }
-
-                passwordHashed = sb.ToString();
-            }
-
-            return passwordHashed;
+            return domainUser == null || domainUser.Deleted ? null : new ModelUser(domainUser);
         }
     }
 }
