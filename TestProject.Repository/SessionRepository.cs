@@ -4,10 +4,9 @@ using TestProject.Repository.Interface;
 
 namespace TestProject.Repository
 {
-    public class UserRepository : BaseRepository<User>, IUserRepository
+    public class SessionRepository : BaseRepository<Session>, ISessionRepository
     {
-        public UserRepository(IAdminContext context)
-            :base(context)
+        public SessionRepository(IAdminContext context) : base(context)
         {
 
         }

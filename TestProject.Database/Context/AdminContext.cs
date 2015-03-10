@@ -1,9 +1,10 @@
 ﻿using System.Data.Entity;
+using TestProject.Database.Context.Interface;
 using TestProject.Model.Domain;
 
 namespace TestProject.Database.Context
 {
-    public class AdminContext: DbContext
+    public class AdminContext: DbContext, IAdminContext
     {
         public AdminContext()
             :base("name=TestProject")
@@ -12,6 +13,7 @@ namespace TestProject.Database.Context
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Session> Sessions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

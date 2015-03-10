@@ -1,20 +1,32 @@
-﻿using System;
+﻿using TestProject.Model.Enum;
 
 namespace TestProject.Model.Domain
 {
-    public class User
+    public class User : BaseEntity
     {
+
+        public User()
+        {
+            // empty
+        }
+
+        public User(View.User model)
+        {
+            UserId = model.UserId;
+            Email = model.Email;
+            FirstName = model.FirstName;
+            LastName = model.LastName;
+            Status = model.Status;
+
+        }
+
         public int UserId { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public Int16 Status { get; set; }
-        public int? CreatedUserId { get; set; }
-        public int? ModifiedUserId { get; set; }
-        public DateTime? Created { get; set; }
-        public DateTime? Modified { get; set; }
-        public bool Deleted { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public UserRole Role { get; set; }
+        public UserStatus Status { get; set; }
 
-        public virtual User CreatedUser { get; set; }
-        public virtual User ModifiedUser { get; set; }
     }
 }

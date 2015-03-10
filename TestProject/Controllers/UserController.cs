@@ -1,44 +1,68 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TestProject.Filters;
 using TestProject.Model.View;
-using TestProject.Service;
+using TestProject.Service.Interface;
 
 namespace TestProject.Controllers
 {
+    [RoutePrefix("user")]
     public class UserController : ApiController
     {
 
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
-        public UserController()
+        public UserController(IUserService userService)
         {
-            _userService = new UserService();
+            _userService = userService;
+        }
+
+        [Route("authenticate")]
+        public HttpResponseMessage PostAuthenticate(UserLogin login)
+        {
+            var token = _userService.Authenticate(login);
+            return token == null 
+                ? Request.CreateResponse(HttpStatusCode.Unauthorized) 
+                : Request.CreateResponse(HttpStatusCode.OK, token);
         }
 
         // GET api/user
-        public IEnumerable<string> Get()
+        [Route("")]
+        [Authenticate]
+        public HttpResponseMessage Get()
         {
-            return new string[] { "value1", "value2" };
+            var users = _userService.GetAll();
+            return Request.CreateResponse(HttpStatusCode.OK, users);
         }
 
         // GET api/user/5
-        public string Get(int id)
+        [Route("{id:int}")]
+        [Authenticate]
+        public HttpResponseMessage Get(int id)
         {
-            return "value";
+            var user = _userService.Get(id);
+            return user == null
+                ? Request.CreateResponse(HttpStatusCode.NotFound)
+                : Request.CreateResponse(HttpStatusCode.OK, user);
         }
 
         // POST api/user
+        [Route("")]
+        [Authenticate]
         public HttpResponseMessage Post(User user)
         {
-            _userService.Save(user);
+            _userService.Create(user);
             return Request.CreateResponse(HttpStatusCode.Created);
         }
 
         // PUT api/user/5
-        public void Put(int id, [FromBody]string value)
+        [Route("{id:int}")]
+        [Authenticate]
+        public HttpResponseMessage Put(int id, User user)
         {
+            _userService.Save(id, user);
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         // DELETE api/user/5

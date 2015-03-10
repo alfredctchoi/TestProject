@@ -39,9 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\BaseEntity.cs" />
+    <Compile Include="Domain\Session.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="Enum\UserRole.cs" />
+    <Compile Include="Enum\UserStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\Interfaces\IValid.cs" />
     <Compile Include="View\User.cs" />
+    <Compile Include="View\UserLogin.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
