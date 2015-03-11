@@ -6,7 +6,7 @@ namespace TestProject.Repository
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        public UserRepository(IAdminContext context)
+        public UserRepository(ITestContext context)
             :base(context)
         {
 

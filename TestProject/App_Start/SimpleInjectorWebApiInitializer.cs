@@ -1,5 +1,6 @@
 using TestProject.Database.Context;
 using TestProject.Database.Context.Interface;
+using TestProject.Model.Domain;
 using TestProject.Repository;
 using TestProject.Repository.Interface;
 using TestProject.Service;
@@ -34,11 +35,15 @@ namespace TestProject.App_Start
      
         private static void InitializeContainer(Container container)
         {
-            container.RegisterWebApiRequest<IAdminContext, AdminContext>();
+            container.RegisterWebApiRequest<ITestContext, TestContext>();
+
             container.RegisterWebApiRequest<IUserService, UserService>();
             container.RegisterWebApiRequest<ISessionService, SessionService>();
+            container.RegisterWebApiRequest<IVendorService, VendorService>();
+
             container.RegisterWebApiRequest<IUserRepository, UserRepository>();
             container.RegisterWebApiRequest<ISessionRepository, SessionRepository>();
+            container.RegisterWebApiRequest<IVendorRepository, VendorRepository>();
 
             // For instance:
             // container.RegisterWebApiRequest<IUserRepository, SqlUserRepository>();

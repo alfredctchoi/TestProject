@@ -57,6 +57,11 @@ namespace TestProject.Model.View
 
         public IList<UserRole> ToUserRoles()
         {
+            if (Roles == null)
+            {
+                return new List<UserRole>();
+            }
+
             return Roles.Select(r => new UserRole
             {
                 Role = (UserRoleEnum) Enum.Parse(typeof (UserRoleEnum), r)

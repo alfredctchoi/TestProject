@@ -107,6 +107,8 @@
     <Compile Include="App_Start\SimpleInjectorWebApiInitializer.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
+    <Compile Include="Extensions\RequestUserIdExtension.cs" />
     <Compile Include="Filters\Authenticate.cs" />
     <Compile Include="Filters\GlobalException.cs" />
     <Compile Include="Global.asax.cs">

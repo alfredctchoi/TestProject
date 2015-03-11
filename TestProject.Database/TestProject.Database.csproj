@@ -46,8 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Context\AdminContext.cs" />
-    <Compile Include="Context\Interface\IAdminContext.cs" />
+    <Compile Include="Context\TestContext.cs" />
+    <Compile Include="Context\Interface\ITestContext.cs" />
     <Compile Include="Context\Interface\IContext.cs" />
     <Compile Include="Migrations\201503050721447_InitialCreate.cs" />
     <Compile Include="Migrations\201503050721447_InitialCreate.Designer.cs">

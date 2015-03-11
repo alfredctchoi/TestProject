@@ -65,7 +65,7 @@ namespace TestProject.Service
             return session.Token;
         }
 
-        public void Save(object userId, ModelUser userModel)
+        public void Save(int userId, ModelUser userModel, int modifiedId)
         {
             if (!userModel.IsValid())
             {
@@ -84,11 +84,12 @@ namespace TestProject.Service
             user.FirstName = userModel.FirstName;
             user.LastName = userModel.LastName;
             user.Modified = DateTime.UtcNow;
+            user.ModifiedUserId = modifiedId;
 
             _userRepository.Save();
         }
 
-        public void Create(ModelUser userModel)
+        public object Create(ModelUser userModel, int createdId)
         {
 
             if (!userModel.IsValid())
@@ -109,13 +110,16 @@ namespace TestProject.Service
                 Created = DateTime.UtcNow,
                 Deleted = false,
                 StatusEnum = UserStatusEnum.Active,
-                Roles = userModel.ToUserRoles()
+                Roles = userModel.ToUserRoles(),
+                CreatedUserId = createdId
             };
 
             _userRepository.Create(user);
+
+            return user.UserId;
         }
 
-        public void Remove(object id)
+        public void Remove(int id, int modifiedId)
         {
             var user = _userRepository.Get(id);
             
@@ -125,10 +129,11 @@ namespace TestProject.Service
             }
 
             user.Deleted = true;
+            user.ModifiedUserId = modifiedId;
             _userRepository.Save();
         }
 
-        public ModelUser Get(object id)
+        public ModelUser Get(int id)
         {
             var domainUser = _userRepository.Get(id);
             return domainUser == null || domainUser.Deleted ? null : new ModelUser(domainUser);

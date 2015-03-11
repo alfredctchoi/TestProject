@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TestProject.Extensions;
 using TestProject.Filters;
 using TestProject.Model.View;
 using TestProject.Service.Interface;
@@ -12,15 +13,13 @@ namespace TestProject.Controllers
     {
 
         private readonly IUserService _userService;
-        private ISessionService _sessionService;
 
-        public UserController(IUserService userService,
-            ISessionService sessionService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _sessionService = sessionService;
         }
 
+        // POST user/authenticate
         [Route("authenticate")]
         public HttpResponseMessage PostAuthenticate(UserLogin login)
         {
@@ -31,7 +30,7 @@ namespace TestProject.Controllers
                 : Request.CreateResponse(HttpStatusCode.OK, token);
         }
 
-        // GET api/user
+        // GET user
         [Route("")]
         [Authenticate]
         public HttpResponseMessage Get()
@@ -40,7 +39,7 @@ namespace TestProject.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, users);
         }
 
-        // GET api/user/5
+        // GET user/5
         [Route("{id:int}")]
         [Authenticate]
         public HttpResponseMessage Get(int id)
@@ -51,30 +50,30 @@ namespace TestProject.Controllers
                 : Request.CreateResponse(HttpStatusCode.OK, user);
         }
 
-        // POST api/user
+        // POST user
         [Route("")]
         [Authenticate]
         public HttpResponseMessage Post(User user)
         {
-            _userService.Create(user);
-            return Request.CreateResponse(HttpStatusCode.Created);
+            var userId = _userService.Create(user, Request.GetUserId());
+            return Request.CreateResponse(HttpStatusCode.Created, new {UserId = userId});
         }
 
-        // PUT api/user/5
+        // PUT user/5
         [Route("{id:int}")]
         [Authenticate]
         public HttpResponseMessage Put(int id, User user)
         {
-            _userService.Save(id, user);
+            _userService.Save(id, user, Request.GetUserId());
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        // DELETE api/user/5
+        // DELETE user/5
         [Route("{id:int}")]
         [Authenticate]
         public HttpResponseMessage Delete(int id)
         {
-            _userService.Remove(id);
+            _userService.Remove(id, Request.GetUserId());
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
