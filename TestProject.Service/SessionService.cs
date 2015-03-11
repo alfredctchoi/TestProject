@@ -22,20 +22,13 @@ namespace TestProject.Service
             _sessionRepository.Save();
         }
 
-        public void Create(Session item)
+        public object Create(Session item)
         {
             _sessionRepository.Create(item);
+
+            return item.SessionId;
         }
 
-        public void Remove(object id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Session Get(object id)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public Session GetByGuid(Guid guid)
         {

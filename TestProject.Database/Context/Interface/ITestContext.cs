@@ -1,6 +1,6 @@
 ﻿namespace TestProject.Database.Context.Interface
 {
-    public interface IAdminContext : IContext
+    public interface ITestContext : IContext
     {
     }
 }

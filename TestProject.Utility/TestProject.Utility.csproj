@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\PredicateExtensions.cs" />
     <Compile Include="PasswordUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

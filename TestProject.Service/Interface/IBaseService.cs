@@ -2,12 +2,12 @@
 {
     public interface IBaseService<T> where T : class
     {
-        void Save(object id, T item);
+        void Save(int id, T item, int modifiedId);
 
-        void Create(T item);
+        object Create(T item, int createdId);
 
-        void Remove(object id);
+        void Remove(int id, int modifiedId);
 
-        T Get(object id);
+        T Get(int id);
     }
 }

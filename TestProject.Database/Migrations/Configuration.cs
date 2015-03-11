@@ -9,15 +9,15 @@ namespace TestProject.Database.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Context.AdminContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Context.TestContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "TestProject.Database.Context.AdminContext";
+            ContextKey = "TestProject.Database.Context.TestContext";
         }
 
-        protected override void Seed(Context.AdminContext context)
+        protected override void Seed(Context.TestContext context)
         {
 
             var user = new User

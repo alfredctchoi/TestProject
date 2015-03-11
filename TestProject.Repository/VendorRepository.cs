@@ -4,11 +4,10 @@ using TestProject.Repository.Interface;
 
 namespace TestProject.Repository
 {
-    public class SessionRepository : BaseRepository<Session>, ISessionRepository
+    public class VendorRepository : BaseRepository<Vendor>, IVendorRepository
     {
-        public SessionRepository(ITestContext context) : base(context)
+        public VendorRepository(ITestContext context) : base(context)
         {
-
         }
     }
 }
