@@ -1,0 +1,14 @@
+﻿{
+    "name": "Vendor 1",
+    "code": "VEN1",
+    "status": "Active",
+    "currency": "usd",
+    "country": "United States",
+    "bank": {
+        "address": "123 fake street",
+        "city": "New York",
+        "state": "New York",
+        "zip": "12345",
+        "accountNumber": "123456"
+    }
+}

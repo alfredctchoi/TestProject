@@ -1,5 +1,4 @@
 ﻿using System;
-using TestProject.Model.Enums;
 
 namespace TestProject.Model.Domain
 {
@@ -11,25 +10,25 @@ namespace TestProject.Model.Domain
             // empty
         }
 
-        public Bank(View.Bank view, CountryEnum country, int creator)
+        public Bank(View.Bank view, int creator)
         {
             CreatedUserId = creator;
             Created = DateTime.UtcNow;
             Deleted = false;
+            AccountNumber = view.AccountNumber;
+            BranchNumber = view.BranchNumber;
+            BankCode = view.BankCode;
+        }
 
-            if (country == CountryEnum.Usa)
-            {
-                Address = view.Address;
-                City = view.City;
-                State = view.State;
-                Zip = view.Zip;
-            }
-            else
-            {
-                AccountNumber = view.AccountNumber;
-                BranchNumber = view.BranchNumber;
-                BankCode = view.BankCode;
-            }
+        public Bank(View.Bank view, int stateId, int creator)
+            : this(view, creator)
+        {
+            Address = view.Address;
+            City = view.City;
+            StateId = stateId;
+            Zip = view.Zip;
+            BranchNumber = null;
+            BankCode = null;
         }
 
         public int VendorId { get; set; }
@@ -38,10 +37,11 @@ namespace TestProject.Model.Domain
         public string BankCode { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
-        public string State { get; set; }
+        public int? StateId{ get; set; }
         public string Zip { get; set; }
 
         public virtual Vendor Vendor { get; set; }
+        public virtual State State { get; set; }
 
     }
 }

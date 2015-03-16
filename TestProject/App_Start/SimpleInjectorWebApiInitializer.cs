@@ -44,6 +44,8 @@ namespace TestProject.App_Start
             container.RegisterWebApiRequest<IUserRepository, UserRepository>();
             container.RegisterWebApiRequest<ISessionRepository, SessionRepository>();
             container.RegisterWebApiRequest<IVendorRepository, VendorRepository>();
+            container.RegisterWebApiRequest<ICountryRepository, CountryRepository>();
+            container.RegisterWebApiRequest<IStateRepository, StateRepository>();
 
             // For instance:
             // container.RegisterWebApiRequest<IUserRepository, SqlUserRepository>();

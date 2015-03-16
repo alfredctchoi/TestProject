@@ -16,11 +16,15 @@ namespace TestProject.Service
     public class VendorService : IVendorService
     {
 
-        private readonly IVendorRepository _vendorRepository ;
+        private readonly IVendorRepository _vendorRepository;
+        private readonly ICountryRepository _countryRepository;
+        private readonly IStateRepository _stateRepository;
 
-        public VendorService(IVendorRepository vendorRepository)
+        public VendorService(IVendorRepository vendorRepository, ICountryRepository countryRepository, IStateRepository stateRepository)
         {
             _vendorRepository = vendorRepository;
+            _countryRepository = countryRepository;
+            _stateRepository = stateRepository;
         }
 
         public void Save(int id, ViewVendor item, int modifiedId)
@@ -65,11 +69,15 @@ namespace TestProject.Service
                 throw new Exception("Duplicate vendor code.");
             }
 
-            var domainVendor = new DomainVendor(item, createdId);
+            var country = _countryRepository.Search(c => !c.Deleted && c.Name.Equals(item.Country));
+            var state = _stateRepository.Search(c => !c.Deleted && c.Name.Equals(item.Bank.State));
+            var domainVendor = new DomainVendor(item, country.CountryId, createdId);
 
             if (item.Bank != null)
             {
-                domainVendor.Bank = new DomainBank(item.Bank, item.Country, createdId);
+                domainVendor.Bank = country.Name.Equals(CountryMap.Canada)
+                    ? new DomainBank(item.Bank, createdId)
+                    : new DomainBank(item.Bank, state.StateId, createdId);
             }
 
             _vendorRepository.Create(domainVendor);
