@@ -99,6 +99,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Tests\JSON Data\Authenticate-Login.json" />
+    <None Include="Tests\JSON Data\Vendor-Create-US.json" />
+    <None Include="Tests\JSON Data\Vendor-Create-CA.json" />
+    <None Include="Tests\JSON Data\User-Create.json" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

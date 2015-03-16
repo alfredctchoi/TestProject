@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Bank.cs" />
+    <Compile Include="Domain\VendorBank.cs" />
     <Compile Include="Domain\BaseEntity.cs" />
     <Compile Include="Domain\Country.cs" />
     <Compile Include="Domain\Session.cs" />

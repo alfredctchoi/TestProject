@@ -18,7 +18,7 @@ namespace TestProject.Database.Context
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
-        public DbSet<Bank> Banks { get; set; }
+        public DbSet<VendorBank> Banks { get; set; }
         public DbSet<Country>Countries { get; set; }
         public DbSet<State> States { get; set; }
 
@@ -82,10 +82,10 @@ namespace TestProject.Database.Context
 
         private void buildBank(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Bank>()
+            modelBuilder.Entity<VendorBank>()
                .HasKey(b => b.VendorId);
 
-            modelBuilder.Entity<Bank>()
+            modelBuilder.Entity<VendorBank>()
                 .HasOptional(b => b.State)
                 .WithMany()
                 .HasForeignKey(b => b.StateId);
@@ -130,7 +130,7 @@ namespace TestProject.Database.Context
                 .HasForeignKey(u => u.ModifiedUserId);
 
             modelBuilder.Entity<Vendor>()
-                .HasOptional(v => v.Bank)
+                .HasOptional(v => v.VendorBank)
                 .WithRequired(b => b.Vendor);
         }
     }

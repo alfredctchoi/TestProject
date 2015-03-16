@@ -8,7 +8,7 @@ namespace TestProject.Database.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.Banks",
+                "dbo.VendorBanks",
                 c => new
                     {
                         VendorId = c.Int(nullable: false),
@@ -162,19 +162,19 @@ namespace TestProject.Database.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.Sessions", "UserId", "dbo.Users");
+            DropForeignKey("dbo.VendorBanks", "VendorId", "dbo.Vendors");
             DropForeignKey("dbo.Vendors", "ModifiedUserId", "dbo.Users");
             DropForeignKey("dbo.Vendors", "CreatedUserId", "dbo.Users");
             DropForeignKey("dbo.Vendors", "CountryId", "dbo.Countries");
-            DropForeignKey("dbo.Banks", "VendorId", "dbo.Vendors");
-            DropForeignKey("dbo.Banks", "StateId", "dbo.States");
+            DropForeignKey("dbo.VendorBanks", "StateId", "dbo.States");
             DropForeignKey("dbo.States", "ModifiedUserId", "dbo.Users");
             DropForeignKey("dbo.States", "CreatedUserId", "dbo.Users");
             DropForeignKey("dbo.States", "CountryId", "dbo.Countries");
             DropForeignKey("dbo.Countries", "State_StateId", "dbo.States");
             DropForeignKey("dbo.Countries", "ModifiedUserId", "dbo.Users");
             DropForeignKey("dbo.Countries", "CreatedUserId", "dbo.Users");
-            DropForeignKey("dbo.Banks", "ModifiedUser_UserId", "dbo.Users");
-            DropForeignKey("dbo.Banks", "CreatedUser_UserId", "dbo.Users");
+            DropForeignKey("dbo.VendorBanks", "ModifiedUser_UserId", "dbo.Users");
+            DropForeignKey("dbo.VendorBanks", "CreatedUser_UserId", "dbo.Users");
             DropForeignKey("dbo.UserRoles", "UserId", "dbo.Users");
             DropForeignKey("dbo.Users", "ModifiedUserId", "dbo.Users");
             DropForeignKey("dbo.Users", "CreatedUserId", "dbo.Users");
@@ -194,17 +194,17 @@ namespace TestProject.Database.Migrations
             DropIndex("dbo.Users", new[] { "ModifiedUserId" });
             DropIndex("dbo.Users", new[] { "CreatedUserId" });
             DropIndex("dbo.Users", "XI_UserEmail");
-            DropIndex("dbo.Banks", new[] { "ModifiedUser_UserId" });
-            DropIndex("dbo.Banks", new[] { "CreatedUser_UserId" });
-            DropIndex("dbo.Banks", new[] { "StateId" });
-            DropIndex("dbo.Banks", new[] { "VendorId" });
+            DropIndex("dbo.VendorBanks", new[] { "ModifiedUser_UserId" });
+            DropIndex("dbo.VendorBanks", new[] { "CreatedUser_UserId" });
+            DropIndex("dbo.VendorBanks", new[] { "StateId" });
+            DropIndex("dbo.VendorBanks", new[] { "VendorId" });
             DropTable("dbo.Sessions");
             DropTable("dbo.Vendors");
             DropTable("dbo.Countries");
             DropTable("dbo.States");
             DropTable("dbo.UserRoles");
             DropTable("dbo.Users");
-            DropTable("dbo.Banks");
+            DropTable("dbo.VendorBanks");
         }
     }
 }

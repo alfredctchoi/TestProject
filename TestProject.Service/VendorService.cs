@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using TestProject.Model.Domain;
 using TestProject.Model.Enums;
 using TestProject.Model.View;
 using TestProject.Repository.Interface;
 using TestProject.Service.Interface;
 using TestProject.Utility.Extensions;
 using DomainVendor = TestProject.Model.Domain.Vendor;
-using DomainBank = TestProject.Model.Domain.Bank;
 using ViewVendor = TestProject.Model.View.Vendor;
 
 namespace TestProject.Service
@@ -75,9 +75,9 @@ namespace TestProject.Service
 
             if (item.Bank != null)
             {
-                domainVendor.Bank = country.Name.Equals(CountryMap.Canada)
-                    ? new DomainBank(item.Bank, createdId)
-                    : new DomainBank(item.Bank, state.StateId, createdId);
+                domainVendor.VendorBank = country.Name.Equals(CountryMap.Canada)
+                    ? new VendorBank(item.Bank, createdId)
+                    : new VendorBank(item.Bank, state.StateId, createdId);
             }
 
             _vendorRepository.Create(domainVendor);

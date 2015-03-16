@@ -2,15 +2,15 @@
 
 namespace TestProject.Model.Domain
 {
-    public class Bank : BaseEntity
+    public class VendorBank : BaseEntity
     {
 
-        public Bank()
+        public VendorBank()
         {
             // empty
         }
 
-        public Bank(View.Bank view, int creator)
+        public VendorBank(View.Bank view, int creator)
         {
             CreatedUserId = creator;
             Created = DateTime.UtcNow;
@@ -20,7 +20,7 @@ namespace TestProject.Model.Domain
             BankCode = view.BankCode;
         }
 
-        public Bank(View.Bank view, int stateId, int creator)
+        public VendorBank(View.Bank view, int stateId, int creator)
             : this(view, creator)
         {
             Address = view.Address;

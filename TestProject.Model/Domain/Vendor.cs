@@ -30,7 +30,7 @@ namespace TestProject.Model.Domain
         public CurrencyEnum Currency { get; set; }
         public VendorStatusEnum Status { get; set; }
 
-        public virtual Bank Bank { get; set; }
+        public virtual VendorBank VendorBank { get; set; }
         public virtual Country Country { get; set; }
     }
 }
