@@ -1,0 +1,12 @@
+﻿{
+    "name": "Vendor 1",
+    "code": "VEN1",
+    "status": "active",
+    "currency": "usd",
+    "country": "usa",
+    "bank": {
+        "accountNumber": "123456789",
+        "branchNumber": "222222",
+        "bankCode": "123"
+    }
+}

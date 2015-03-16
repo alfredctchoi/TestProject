@@ -43,13 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CountryRepository.cs" />
+    <Compile Include="Interface\ICountryRepository.cs" />
     <Compile Include="Interface\ISessionRepository.cs" />
+    <Compile Include="Interface\IStateRepository.cs" />
     <Compile Include="Interface\IUserRepository.cs" />
     <Compile Include="BaseRepository.cs" />
     <Compile Include="Interface\IBaseRepository.cs" />
     <Compile Include="Interface\IVendorRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionRepository.cs" />
+    <Compile Include="StateRepository.cs" />
     <Compile Include="UserRepository.cs" />
     <Compile Include="VendorRepository.cs" />
   </ItemGroup>
